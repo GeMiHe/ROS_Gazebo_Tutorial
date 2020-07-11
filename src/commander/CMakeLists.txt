@@ -8,21 +8,36 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   sensor_msgs
   nav_msgs
+  message_generation
 )
 
 find_package(Eigen3 REQUIRED)
 
+add_message_files(
+	DIRECTORY msg
+	FILES
+		FireSource.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+    geometry_msgs
+    sensor_msgs
+)
+
 catkin_package(
-   CATKIN_DEPENDS 
-     roscpp 
-     rospy 
-     std_msgs 
-     geometry_msgs 
-     sensor_msgs 
+   CATKIN_DEPENDS
+     roscpp
+     rospy
+     std_msgs
+     geometry_msgs
+     sensor_msgs
      nav_msgs
+     message_runtime
    DEPENDS
      EIGEN3
 )
+
 
 include_directories(
   ${catkin_INCLUDE_DIRS}

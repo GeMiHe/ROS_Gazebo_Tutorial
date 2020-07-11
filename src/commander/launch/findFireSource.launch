@@ -1,0 +1,11 @@
+<launch>
+
+  <include file="$(find simulation_environment)/launch/temperature.launch"/>
+
+  <node pkg="commander" name="tempSearch" type="tempSearch.py" output="screen"> 
+  <rosparam param="max_speed"> 1 </rosparam> 
+  <rosparam param="max_turnspeed"> 5 </rosparam> 
+  <rosparam param="maxBufferLength"> 5000 </rosparam> 
+  </node>
+
+</launch>

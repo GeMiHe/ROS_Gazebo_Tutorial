@@ -1,5 +1,5 @@
 # Tutorial for ROS and Gazebo
-Group members: Robin Denz (665487), Gesche Held (716129) and Rabia Demirci (662053)
+Group members: Robin Denz (665487) and Rabia Demirci (662053)
 This is the code basis for ROS and Gazebo Tutorials and Assignments. We use a simulated differential drive robot equipped with different sensors, such as an IMU, an Odometer, a LiDAR or a Camera. Check out the video tutorials for getting a detailed introduction into ROS and Gazebo.
 
 ## Table of Contents  

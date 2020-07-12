@@ -1,6 +1,6 @@
 # Tutorial for ROS and Gazebo
+Group members: Robin Denz (665487), Gesche Held (716129) and Rabia Demirci (662053)
 This is the code basis for ROS and Gazebo Tutorials and Assignments. We use a simulated differential drive robot equipped with different sensors, such as an IMU, an Odometer, a LiDAR or a Camera. Check out the video tutorials for getting a detailed introduction into ROS and Gazebo.
-
 
 ## Table of Contents  
 [Requirements](#requirements) <br/>
@@ -10,7 +10,6 @@ This is the code basis for ROS and Gazebo Tutorials and Assignments. We use a si
 [Important Topics](#topics) <br/>
 [Assignment 01](#assignment01) <br/>
 [Assignment 02](#assignment02) <br/>
-[Performance Improvements for Virtual Machines](#improvement) <br/>
 [License](#license) <br/>
 
 ## Requirements <a name="requirements"></a>
@@ -76,12 +75,12 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 
 ## Important Topics (Message Types) provided by the Simulation Environment <a name="topics"></a>
 * Published
-  * /camera/image_raw 	(sensor_msgs/Image)
-  * /imu		(sensor_msgs/Imu)
-  * /odom		(nav_msgs/Odometry)
-  * /scan		(sensor_msgs/LaserScan)
+  * /camera/image_raw     (sensor_msgs/Image)
+  * /imu        (sensor_msgs/Imu)
+  * /odom        (nav_msgs/Odometry)
+  * /scan        (sensor_msgs/LaserScan)
 * Subsrcibed
-  * /cmd_vel		(geoemtry_msgs/Twist)
+  * /cmd_vel        (geoemtry_msgs/Twist)
 
 ## Assignment 01: <a name="assignment01"></a>
 1. Generate a Map of the Environment
@@ -120,10 +119,29 @@ You can either design an autonomous search for the robot or pre-define points fo
 * Finally, if you tried the above and you still have an unanswered question, then feel free to ask us via Mail, Nils.Rottmann (at) rob.uni-luebeck.de
 
 ### Participant Instructions
-
-...
-
-
+#### How to run
+* First navigate to the repository and open a terminal 
+```bash
+catkin_make 
+```
+* Navigate to src/commander/src and open it in a terminal
+* Type the following to make the python file executable
+```bash
+chmod +x personSearch.py
+```
+* Open a new terminal and launch the following to start the simulation environment
+```bash
+roslaunch commander findPerson.launch
+```
+* Open a second terminal or just another tab for to view the published person messages
+```bash
+rostopic echo /missing_person
+```
+#### Implementation 
+* The map has been generated and saved as ‘assignment1Map’.
+* The robot drives to pre-define points for navigation (based on our map) to search all rooms.
+* Hereby, it steers to one point after an other and covers the whole apartement while searching.
+* When a person is detected the robot pose at the time of sighting is published as a Marker message under the topic “/missing_person” and the robot stops further searching.
 
 ## Assignment 02: <a name="assignment02"></a>
 
@@ -160,21 +178,31 @@ For getting the pose of the robot you can simply subscribe to the odometry topic
 * Add instructions for installation and usage of your repository below under the headline Participant Instructions.
 
 ### Participant Instructions
-
-...
-
-
-## Performance Improvements for Virtual Machines <a name="improvement"></a>
-
-If you are using a virtual machine to run Ubuntu 18.04, you might suffer from bad performance. Don't worry, there are multiple options to increase the performance of your VM:
-
-* If you have HDD and SSD hard disks, then make sure your VM is stored on the SSD.
-* Make sure to allocate enough RAM to the VM. If your PC has 8GB you can allocate 4GB to the VM.
-* Install the guest additions in VirtualBox. With that better graphics driver can be used.
-* Increase the video memory of the VM.
-* Use a better graphic processor if you are running VirtualBox on a notebook.
-* Allocate more CPU cores to the VM.
-* Enable 3D acceleration.
+#### How to run  
+* First navigate to the repository and open a terminal 
+```bash
+catkin_make 
+```
+* Navigate to src/commander/src and open it in a terminal
+* Type the following to make the python file executable
+```bash
+chmod +x tempSearch.py
+```
+* Open a new terminal and launch the following to start the simulation environment
+```bash
+roslaunch commander findFireSource.launch
+```
+* Open a second terminal or just another tab for to view the published fire source messages
+```bash
+rostopic echo /fire_source
+```
+#### Implementation
+* The robot fist follows the ascending temperature gradient and finds one of the two fire sources and saves the temperature and the location of it.
+* To search and find the second fireplace the robot starts to explore in a random direction away from the already found fire source. Hereby, the ‘exploring distance’ is set to 1 for the first run. 
+* Afterwards, the robot starts to follow the ascending temperature gradient again. When the found new fire source is within a specific radius of the previous one, the robot assumes it found the same. Therefore, the exploring radius increases and the exploring behaviour is executed again. 
+* Since, the exploring direction is set randomly the robot will find the second fireplace at some point.
+* Everytime the robot finds a fireplace a ROS message is published in the terminal with the respective frame id : fist_fire_source or second_fire_source.
+* In the ‘launch’ terminal the state of robot is shown. Possible states: searching_first, searching_second or escaping. If both fireplaces are found the fireplace positions and the respective temperatures are shown. 
 
 ## License <a name="license"></a>
 
@@ -186,3 +214,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+
+
+

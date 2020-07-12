@@ -2,7 +2,7 @@ obstacle_range: 10
 raytrace_range: 10
 max_obstacle_height: 2.0
 inf_is_valid: true
-footprint: [[0.01, 0.01], [-0.01, 0.01], [-0.01, -0.01], [0.01, -0.01]]
+footprint: [[0.1, 0.1], [-0.1, 0.1], [-0.1, -0.1], [0.1, -0.1]]
 
 inflation_radius: 0.0
 costscalingfactor: 1.3
